@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HastaneDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DoktorHastaliklari">
+    <Key>
+      <PropertyRef Name="DoktorID" />
+      <PropertyRef Name="HastalikID" />
+    </Key>
+    <Property Name="DoktorID" Type="int" Nullable="false" />
+    <Property Name="HastalikID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doktorlar">
+    <Key>
+      <PropertyRef Name="DoktorID" />
+    </Key>
+    <Property Name="DoktorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hastalar">
+    <Key>
+      <PropertyRef Name="HastaID" />
+    </Key>
+    <Property Name="HastaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DoktorID" Type="int" />
+  </EntityType>
+  <EntityType Name="Hastaliklar">
+    <Key>
+      <PropertyRef Name="HastalikID" />
+    </Key>
+    <Property Name="HastalikID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HastaID" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__DoktorHas__Dokto__3F466844">
+    <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="1" />
+    <End Role="DoktorHastaliklari" Type="Self.DoktorHastaliklari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doktorlar">
+        <PropertyRef Name="DoktorID" />
+      </Principal>
+      <Dependent Role="DoktorHastaliklari">
+        <PropertyRef Name="DoktorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DoktorHas__Hasta__403A8C7D">
+    <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="1" />
+    <End Role="DoktorHastaliklari" Type="Self.DoktorHastaliklari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastaliklar">
+        <PropertyRef Name="HastalikID" />
+      </Principal>
+      <Dependent Role="DoktorHastaliklari">
+        <PropertyRef Name="HastalikID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Hastalar__Doktor__398D8EEE">
+    <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="0..1" />
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doktorlar">
+        <PropertyRef Name="DoktorID" />
+      </Principal>
+      <Dependent Role="Hastalar">
+        <PropertyRef Name="DoktorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Hastalikl__Hasta__3C69FB99">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="0..1" />
+    <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="Hastaliklar">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HastaneDBModelStoreContainer">
+    <EntitySet Name="DoktorHastaliklari" EntityType="Self.DoktorHastaliklari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doktorlar" EntityType="Self.Doktorlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hastalar" EntityType="Self.Hastalar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hastaliklar" EntityType="Self.Hastaliklar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DoktorHas__Dokto__3F466844" Association="Self.FK__DoktorHas__Dokto__3F466844">
+      <End Role="Doktorlar" EntitySet="Doktorlar" />
+      <End Role="DoktorHastaliklari" EntitySet="DoktorHastaliklari" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DoktorHas__Hasta__403A8C7D" Association="Self.FK__DoktorHas__Hasta__403A8C7D">
+      <End Role="Hastaliklar" EntitySet="Hastaliklar" />
+      <End Role="DoktorHastaliklari" EntitySet="DoktorHastaliklari" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Hastalar__Doktor__398D8EEE" Association="Self.FK__Hastalar__Doktor__398D8EEE">
+      <End Role="Doktorlar" EntitySet="Doktorlar" />
+      <End Role="Hastalar" EntitySet="Hastalar" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Hastalikl__Hasta__3C69FB99" Association="Self.FK__Hastalikl__Hasta__3C69FB99">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="Hastaliklar" EntitySet="Hastaliklar" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

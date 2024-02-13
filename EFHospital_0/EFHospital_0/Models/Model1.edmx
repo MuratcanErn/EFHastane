@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HastaneDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DoktorHastaliklari">
+          <Key>
+            <PropertyRef Name="DoktorID" />
+            <PropertyRef Name="HastalikID" />
+          </Key>
+          <Property Name="DoktorID" Type="int" Nullable="false" />
+          <Property Name="HastalikID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doktorlar">
+          <Key>
+            <PropertyRef Name="DoktorID" />
+          </Key>
+          <Property Name="DoktorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hastalar">
+          <Key>
+            <PropertyRef Name="HastaID" />
+          </Key>
+          <Property Name="HastaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DoktorID" Type="int" />
+        </EntityType>
+        <EntityType Name="Hastaliklar">
+          <Key>
+            <PropertyRef Name="HastalikID" />
+          </Key>
+          <Property Name="HastalikID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HastaID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__DoktorHas__Dokto__3F466844">
+          <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="1" />
+          <End Role="DoktorHastaliklari" Type="Self.DoktorHastaliklari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doktorlar">
+              <PropertyRef Name="DoktorID" />
+            </Principal>
+            <Dependent Role="DoktorHastaliklari">
+              <PropertyRef Name="DoktorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DoktorHas__Hasta__403A8C7D">
+          <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="1" />
+          <End Role="DoktorHastaliklari" Type="Self.DoktorHastaliklari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hastaliklar">
+              <PropertyRef Name="HastalikID" />
+            </Principal>
+            <Dependent Role="DoktorHastaliklari">
+              <PropertyRef Name="HastalikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hastalar__Doktor__398D8EEE">
+          <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="0..1" />
+          <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doktorlar">
+              <PropertyRef Name="DoktorID" />
+            </Principal>
+            <Dependent Role="Hastalar">
+              <PropertyRef Name="DoktorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hastalikl__Hasta__3C69FB99">
+          <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="0..1" />
+          <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hastalar">
+              <PropertyRef Name="HastaID" />
+            </Principal>
+            <Dependent Role="Hastaliklar">
+              <PropertyRef Name="HastaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HastaneDBModelStoreContainer">
+          <EntitySet Name="DoktorHastaliklari" EntityType="Self.DoktorHastaliklari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doktorlar" EntityType="Self.Doktorlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hastalar" EntityType="Self.Hastalar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hastaliklar" EntityType="Self.Hastaliklar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DoktorHas__Dokto__3F466844" Association="Self.FK__DoktorHas__Dokto__3F466844">
+            <End Role="Doktorlar" EntitySet="Doktorlar" />
+            <End Role="DoktorHastaliklari" EntitySet="DoktorHastaliklari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DoktorHas__Hasta__403A8C7D" Association="Self.FK__DoktorHas__Hasta__403A8C7D">
+            <End Role="Hastaliklar" EntitySet="Hastaliklar" />
+            <End Role="DoktorHastaliklari" EntitySet="DoktorHastaliklari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hastalar__Doktor__398D8EEE" Association="Self.FK__Hastalar__Doktor__398D8EEE">
+            <End Role="Doktorlar" EntitySet="Doktorlar" />
+            <End Role="Hastalar" EntitySet="Hastalar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hastalikl__Hasta__3C69FB99" Association="Self.FK__Hastalikl__Hasta__3C69FB99">
+            <End Role="Hastalar" EntitySet="Hastalar" />
+            <End Role="Hastaliklar" EntitySet="Hastaliklar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HastaneDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Doktorlar">
+          <Key>
+            <PropertyRef Name="DoktorID" />
+          </Key>
+          <Property Name="DoktorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Hastalars" Relationship="Self.FK__Hastalar__Doktor__398D8EEE" FromRole="Doktorlar" ToRole="Hastalar" />
+          <NavigationProperty Name="Hastaliklars" Relationship="Self.DoktorHastaliklari" FromRole="Doktorlar" ToRole="Hastaliklar" />
+        </EntityType>
+        <EntityType Name="Hastalar">
+          <Key>
+            <PropertyRef Name="HastaID" />
+          </Key>
+          <Property Name="HastaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DoktorID" Type="Int32" />
+          <NavigationProperty Name="Doktorlar" Relationship="Self.FK__Hastalar__Doktor__398D8EEE" FromRole="Hastalar" ToRole="Doktorlar" />
+          <NavigationProperty Name="Hastaliklars" Relationship="Self.FK__Hastalikl__Hasta__3C69FB99" FromRole="Hastalar" ToRole="Hastaliklar" />
+        </EntityType>
+        <EntityType Name="Hastaliklar">
+          <Key>
+            <PropertyRef Name="HastalikID" />
+          </Key>
+          <Property Name="HastalikID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HastaID" Type="Int32" />
+          <NavigationProperty Name="Hastalar" Relationship="Self.FK__Hastalikl__Hasta__3C69FB99" FromRole="Hastaliklar" ToRole="Hastalar" />
+          <NavigationProperty Name="Doktorlars" Relationship="Self.DoktorHastaliklari" FromRole="Hastaliklar" ToRole="Doktorlar" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Hastalar__Doktor__398D8EEE">
+          <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="0..1" />
+          <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doktorlar">
+              <PropertyRef Name="DoktorID" />
+            </Principal>
+            <Dependent Role="Hastalar">
+              <PropertyRef Name="DoktorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hastalikl__Hasta__3C69FB99">
+          <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="0..1" />
+          <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hastalar">
+              <PropertyRef Name="HastaID" />
+            </Principal>
+            <Dependent Role="Hastaliklar">
+              <PropertyRef Name="HastaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoktorHastaliklari">
+          <End Role="Doktorlar" Type="Self.Doktorlar" Multiplicity="*" />
+          <End Role="Hastaliklar" Type="Self.Hastaliklar" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="HastaneDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Doktorlars" EntityType="Self.Doktorlar" />
+          <EntitySet Name="Hastalars" EntityType="Self.Hastalar" />
+          <EntitySet Name="Hastaliklars" EntityType="Self.Hastaliklar" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__Hastalar__Doktor__398D8EEE" Association="Self.FK__Hastalar__Doktor__398D8EEE">
+            <End Role="Doktorlar" EntitySet="Doktorlars" />
+            <End Role="Hastalar" EntitySet="Hastalars" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hastalikl__Hasta__3C69FB99" Association="Self.FK__Hastalikl__Hasta__3C69FB99">
+            <End Role="Hastalar" EntitySet="Hastalars" />
+            <End Role="Hastaliklar" EntitySet="Hastaliklars" />
+          </AssociationSet>
+          <AssociationSet Name="DoktorHastaliklari" Association="Self.DoktorHastaliklari">
+            <End Role="Doktorlar" EntitySet="Doktorlars" />
+            <End Role="Hastaliklar" EntitySet="Hastaliklars" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HastaneDBModelStoreContainer" CdmEntityContainer="HastaneDBEntities">
+          <EntitySetMapping Name="Doktorlars">
+            <EntityTypeMapping TypeName="HastaneDBModel.Doktorlar">
+              <MappingFragment StoreEntitySet="Doktorlar">
+                <ScalarProperty Name="DoktorID" ColumnName="DoktorID" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hastalars">
+            <EntityTypeMapping TypeName="HastaneDBModel.Hastalar">
+              <MappingFragment StoreEntitySet="Hastalar">
+                <ScalarProperty Name="HastaID" ColumnName="HastaID" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+                <ScalarProperty Name="DoktorID" ColumnName="DoktorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hastaliklars">
+            <EntityTypeMapping TypeName="HastaneDBModel.Hastaliklar">
+              <MappingFragment StoreEntitySet="Hastaliklar">
+                <ScalarProperty Name="HastalikID" ColumnName="HastalikID" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+                <ScalarProperty Name="HastaID" ColumnName="HastaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HastaneDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DoktorHastaliklari" TypeName="HastaneDBModel.DoktorHastaliklari" StoreEntitySet="DoktorHastaliklari">
+            <EndProperty Name="Doktorlar">
+              <ScalarProperty Name="DoktorID" ColumnName="DoktorID" />
+            </EndProperty>
+            <EndProperty Name="Hastaliklar">
+              <ScalarProperty Name="HastalikID" ColumnName="HastalikID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
